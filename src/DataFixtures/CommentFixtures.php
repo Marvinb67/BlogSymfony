@@ -28,6 +28,8 @@ class CommentFixtures extends Fixture implements DependentFixtureInterface
         $users = $this->userRepository->findAll();
         $articles = $this->articleRepository->findAll();
 
+        $articleLength = count($articles) - 1;
+
         for($i = 0; $i < 300; $i++)
         {
             $comment = new Comment();
@@ -35,8 +37,8 @@ class CommentFixtures extends Fixture implements DependentFixtureInterface
             $randomUser = array_rand($users);
             $user = $users[$randomUser];
 
-            $randomArticle = array_rand($articles);
-            $article = $articles[$randomArticle];
+            $randArticle = array_rand($articles);
+            $article = $articles[$randArticle];
 
             $comment
                 ->setArticle($article)

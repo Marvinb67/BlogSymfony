@@ -1,0 +1,29 @@
+ul{
+    list-style: none;
+}
+
+a{
+    color: black;
+}
+
+header nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: black;
+}
+
+header nav a{
+    color: white;
+}
+
+header nav ul{
+    display: flex;
+    align-items: center;
+}
+
+header nav ul li{
+    margin: 0 2em;
+}
+
+

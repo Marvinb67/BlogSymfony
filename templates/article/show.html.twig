@@ -1,0 +1,28 @@
+{% include 'base.html.twig' %}
+
+<div class="card" style="width: 18rem;">
+    <img src="{{ article.featuredImage }}" class="card-img-top" alt="image-article">
+    <div class="card-body">
+        <h2 class="card-title">{{ article.title }}</h2>
+        <h4>{{ article.featuredText }}</h4>
+        <p class="card-text">{{ article.content }}</p>
+        <p>Ecrit par : {{ article.author.username }}, le : {{ article.createdAt | date('d/m/Y H:m:i') }}</p>
+        <p>Dernière Modification : {{ article.updatedAt | date('d/m/Y H:m:i') }}</p>
+        <small>Catégorie : {{ article.category.name }}</small>
+    </div>
+</div>
+
+<div id="comment" class="mt-3">
+    <h5>Commentaires :</h5>
+    {% if app.user %}
+{#    <a href="" class="btn btn-primary">Laisser un commentaire</a>#}
+        {{ form(formComment) }}
+    {% endif %}
+    <div class="mt-5">
+    {% for comment in comments %}
+        <p>De : {{ comment.author.username }} le {{ comment.createdAt | date('d/m/Y H:m:i') }}</p>
+        <p>{{ comment.content }}</p>
+        <hr>
+    {% endfor %}
+    </div>
+</div>

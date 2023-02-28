@@ -13,6 +13,9 @@ use Doctrine\ORM\Mapping\PreUpdate;
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
 class Article
 {
+    const STATUS_DRAFT = 0;
+    const STATUS_PUBLISHED = 1;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -34,12 +37,16 @@ class Article
     private ?\DateTimeInterface $updatedAt = null;
 
     #[ORM\Column]
+    #[Assert\Choice(choices: [
+        self::STATUS_DRAFT,
+        self::STATUS_PUBLISHED
+    ])]
     private ?int $status = null;
 
     #[ORM\Column(length: 255)]
     private ?string $featuredImage = null;
 
-    #[ORM\OneToMany(mappedBy: 'article', targetEntity: Comment::class)]
+    #[ORM\OneToMany(mappedBy: 'article', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
 
     #[ORM\ManyToOne(inversedBy: 'articles')]

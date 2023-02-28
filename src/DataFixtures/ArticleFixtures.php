@@ -25,7 +25,6 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
     {
         $faker = Faker::create('fr_FR');
 
-        $user = $this->userRepository->findOneBy(['roles' => 'ROLE_AUTHOR']);
         $categories = $this->categoryRepository->findAll();
 
         for($i = 0; $i < 100; $i++)
@@ -38,12 +37,15 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
             $article
                 ->setTitle($faker->words(3, true))
                 ->setContent($faker->sentences(3, true))
-                ->setFeaturedImage($faker->image(null, 640, 480))
-                ->setAuthor($user)
+                ->setFeaturedImage($faker->imageUrl(640, 480, null, true))
+                ->setStatus(1)
+                ->setAuthor($this->getReference(UserFixtures::AUTHOR))
                 ->setFeaturedText($faker->sentence())
                 ->setCategory($category)
                 ->setSlug($this->sluggerInterface->slug($article->getTitle()))
             ;
+
+            $manager->persist($article);
         }
 
 

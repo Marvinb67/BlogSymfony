@@ -1,0 +1,19 @@
+{% include 'base.html.twig' %}
+<h1>{{ category.name }}</h1>
+
+<h2>Article de cet catégorie</h2>
+{% for article in articles %}
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">{{ article.title }}</h5>
+            {% if article.featuredText is null %}
+                {{ article.content | slice(0, 50) ~ '...'}}
+            {% else %}
+                <p class="card-text">{{ article.featuredText }}</p>
+            {% endif %}
+            <p>Ecrit par : {{ article.author.username }}, Posté le : {{ article.createdAt | date('d/m/Y H:m:i') }}</p>
+            <small>Categorie : {{ article.category.name }}</small>
+            <a href="{{ path('app_article_show', {'slug': article.slug}) }}" class="btn btn-primary">Voir plus</a>
+        </div>
+    </div>
+{% endfor %}

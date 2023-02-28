@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+{% include 'base.html.twig' %}
+    <p>Bienvenue sur mon blog, vous y trouverez pleins de choses cool !!</p>
+
+    <h2>10 derniers articles</h2>
+    <ol>
+{#     <p>{{ article.title }} : Publiée le {{ article.createdAt | date('d/m/Y H:m:i') }}</p>#}
+        {% for article in articles %}
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ article.title }}</h5>
+                    {% if article.featuredText is null %}
+                        {{ article.content | slice(0, 50) ~ '...'}}
+                    {% else %}
+                        <p class="card-text">{{ article.featuredText }}</p>
+                    {% endif %}
+                    <p>Ecrit par : {{ article.author.username }}, Posté le : {{ article.createdAt | date('d/m/Y H:m:i') }}</p>
+                    <small>Categorie : {{ article.category.name }}</small>
+                    <a href="{{ path('app_article_show', {'slug': article.slug}) }}" class="btn btn-primary">Voir plus</a>
+                </div>
+            </div>
+        {% endfor %}
+    </ol>
+{#    <div id="pagination">#}
+{#    {{ knp_pagination_render(articles) }}#}
+{#    </div>#}
+
+    <aside>
+        <div>
+            <section>
+                <div>
+                    <h3>Categories</h3>
+                </div>
+                <ul>
+                    {% for category in categories %}
+                        {% if category.articles is not null %}
+                            <li><a href="{{ path('app_category_show', {'id': category.id}) }}">{{ category.name }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </section>
+        </div>
+    </aside>
+{% endblock %}
